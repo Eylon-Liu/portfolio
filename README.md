@@ -2,7 +2,7 @@
 
 Full-stack and mobile developer with experience across iOS (SwiftUI), web (React, TypeScript), and Python. I enjoy building tools that solve real problems — from AI-powered health record management to quantitative finance pipelines.
 
-This repo showcases selected projects. Source code for each is available upon request.
+This repo showcases selected projects. Some are open source and linked below; for the rest, source is available upon request.
 
 ---
 
@@ -36,13 +36,54 @@ Upload a medical report as a PDF or photo, and the app automatically extracts la
 
 ---
 
-## LifeMap — Personal Website
+## Quant Research Terminal
+
+**Local web app for mid- and long-horizon equity research — screening, backtesting and filings intelligence.**
+
+Stores everything it fetches, so a screen can be re-run *as of any past date* and a strategy
+backtested without using information that did not exist yet. Runs entirely on your machine,
+on free data sources, with no API keys required.
+
+<p align="center">
+  <img src="images/quant-screen.jpg" width="700" alt="Screen tab — Buffett Quality strategy, ranked results with sector and signal breakdown" />
+</p>
+<p align="center"><em>Screen tab: a quality strategy run over the S&amp;P 500 — ranked results, sector mix, signal breakdown</em></p>
+
+<p align="center">
+  <img src="images/quant-intel.jpg" width="700" alt="Intel tab — company overview, candlestick chart and cross-strategy signals" />
+</p>
+<p align="center"><em>Intel tab: company overview, price chart, and how each strategy scores the name</em></p>
+
+**What it does:**
+- Fourteen strategies across two horizons — quality/value/compounder screens for the long term, momentum/breakout/mean-reversion for the mid term
+- Position sizes implied by a risk budget and stop distance, expressed as a share of portfolio
+- Reports rank IC next to returns, so it's visible when outperformance came from a few names rather than from the ranking actually working
+
+**Technical highlights:**
+- Point-in-time correctness throughout: every SEC fact is gated on its filing date, so a screen never sees a figure before it was public
+- Survivorship bias handled — index membership is reconstructed historically from page revisions and cross-checked against the ETF's own N-PORT filings
+- XBRL duration disambiguation (quarterly vs. year-to-date facts sharing an end date), and adjusted/unadjusted prices never mixed
+- Per-ticker staleness tracking and a store-versioned factor cache: a cold run takes ~76s, a repeat run with nothing stale ~0.2s
+
+**Stack:** Python, SQLite, SEC EDGAR XBRL, Dash. Optional LLM layer for natural-language interpretation.
+
+**Source:** [github.com/Eylon-Liu/trading](https://github.com/Eylon-Liu/trading)
+
+---
+
+## Personal Website
 
 **Interactive editorial-atlas personal site.** World map of cities lived and traveled, work timeline, life chapters, and photography.
 
 **Live:** [eylon-liu.vercel.app](https://eylon-liu.vercel.app)
 
-**Stack:** React (JSX), Mapbox GL, Vercel static deploy. Single-source build with JSX precompilation.
+**Technical highlights:**
+- Hand-plotted dot-matrix world map drawn as inline SVG — no map library or tile service, so the whole site is one static file with no runtime dependencies beyond React
+- Animated great-circle journey between cities, with per-city detail cards and passport stamps
+- Justified photo gallery: frames take each photo's own aspect ratio, so nothing is cropped
+- Build step precompiles the JSX and ships React's production build, cutting ~4 MB of JavaScript off the page
+
+**Stack:** React (JSX), inline SVG, static deploy on Vercel with a single-source build.
 
 ---
 
@@ -66,25 +107,12 @@ Interactive journaling experience that helps users explore personal history and 
 
 ---
 
-## Quantitative Finance Tools
-
-**Collection of financial analysis notebooks and trading algorithms.**
-
-- Fixed income & credit landscape analysis across tech and financial sectors
-- FX risk modeling with strip-based and fixed approaches
-- Algorithmic trading strategies with backtesting
-- Interactive data exploration dashboards (desktop GUI)
-
-**Stack:** Python, Jupyter, pandas, matplotlib.
-
----
-
 ## Technical Skills
 
 | Area | Technologies |
 |---|---|
 | **Mobile** | SwiftUI, CoreData, UIKit, XcodeGen, TestFlight |
-| **Frontend** | React, TypeScript, JavaScript, HTML/CSS, Mapbox |
+| **Frontend** | React, TypeScript, JavaScript, HTML/CSS, SVG |
 | **Backend** | Python, Flask, Node.js, SQLite |
 | **AI/ML** | REST API integrations (Gemini, DeepSeek, Qwen), prompt engineering, vision models, structured extraction |
 | **Finance** | Fixed income analysis, FX risk, algorithmic trading, quantitative modeling |
