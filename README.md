@@ -87,26 +87,6 @@ on free data sources, with no API keys required.
 
 ---
 
-## OIS AI — AI Calendar & Task Manager
-
-**Web app that uses AI to intelligently schedule tasks around your real calendar.**
-
-Connects to your calendar, understands your working hours and energy patterns, then allocates tasks to optimal time slots. Includes routine management, break optimization, and productivity analytics.
-
-**Stack:** Python (Flask), DeepSeek API, SQLite. Full-featured dashboard with analytics and AI chat interface.
-
----
-
-## Contour
-
-**A reflective journaling app — understand what shaped you.**
-
-Interactive journaling experience that helps users explore personal history and recurring life patterns through guided prompts and timeline visualization.
-
-**Stack:** React Native, JavaScript.
-
----
-
 ## Technical Skills
 
 | Area | Technologies |
