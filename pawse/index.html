@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pawse 宠物管家</title>
+<meta name="description" content="刷手机太久，你的宠物就会出事。放下手机做件小事，它才会恢复。">
+<style>
+/* Pawse 的公开页面。设计令牌抄自 design/handoff/DESIGN_HANDOFF.md 第 1 节，
+   和 App 里的 Theme.swift 是同一套，这样从 App Store 点进来不会像两个产品。 */
+:root {
+  --ground: #EEF1EC;
+  --surface: #FBFCFA;
+  --ink: #1E2622;
+  --ink-secondary: #59635E;
+  --accent: #C4491E;
+  --track: #D3DBD5;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #141917;
+    --surface: #1E2622;
+    --ink: #F3F6F2;
+    --ink-secondary: #B9C3BD;
+    --accent: #E87351;
+    --track: #39413C;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0 20px 64px;
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.75 -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 680px; margin: 0 auto; }
+header { padding: 48px 0 8px; }
+h1 { font-size: 28px; line-height: 1.3; margin: 0 0 8px; }
+h2 { font-size: 19px; margin: 36px 0 8px; }
+h3 { font-size: 16px; margin: 24px 0 4px; }
+p, ul { margin: 12px 0; }
+ul { padding-left: 20px; }
+li { margin: 6px 0; }
+a { color: var(--accent); }
+.lead {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-weight: 700;
+}
+.meta { color: var(--ink-secondary); font-size: 14px; margin: 0; }
+hr { border: none; border-top: 1px solid var(--track); margin: 40px 0; }
+nav { margin: 24px 0 0; font-size: 14px; }
+nav a { margin-right: 16px; }
+footer { margin-top: 48px; color: var(--ink-secondary); font-size: 14px; }
+code { background: var(--surface); padding: 2px 6px; border-radius: 6px; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Pawse 宠物管家</h1>
+  <p class="meta">灵动岛小宠物帮你戒手机</p>
+</header>
+
+<p class="lead">刷手机太久，你的宠物就会出事；只有你放下手机做一件小事，它才会恢复。</p>
+
+<p>Pawse 不是游戏，是一个遮罩 App。宠物只是个借口和记分板——真正起作用的是那次打断，以及你为了解开它去做的那件小事。所有奖励只能来自「放下手机」这件事本身。</p>
+
+<h2>它怎么工作</h2>
+<ul>
+  <li><strong>打开时轻轻拦一下</strong>：每次打开你自己选的那几个 App，宠物先出来问一句。点「不刷了」并且真的安静 20 分钟，给的分比做任何任务都高。</li>
+  <li><strong>刷太久就挡住</strong>：超过你自己设的时长，App 被挡住，得陪宠物做件小事才能继续——走 20 步、喝杯水、伸展 1 分钟、答道急转弯、看远处两分钟、饭点陪它吃饭、勾掉一件待办。</li>
+  <li><strong>想专心就开个模式</strong>：工作、学习、睡前，开着的时候整个名单都锁住，到点自动解开；也可以设时间表每天自动开。学习是番茄钟。</li>
+  <li><strong>游戏按局算</strong>：游戏有自然的结束点，中途打断最伤人。所以开局前先说好这一局多久，局中完全不打断，打完才拦。</li>
+  <li><strong>永远留着出口</strong>：每天一次紧急通道、花希望值向明天借时间、随时能「歇几天」。我们不把人困住——那只会换来卸载。</li>
+  <li><strong>看得到真实的数</strong>：统计页有 iPhone「屏幕使用时间」自己记的、精确到分钟的用量，最近 7 天都有，包括装 Pawse 之前的日子。这个数只显示给你看，Pawse 自己也读不到。</li>
+  <li><strong>宠物不会死</strong>：最差也就是有点脏、有点不开心，一件小事就能恢复。</li>
+</ul>
+
+<h2>隐私</h2>
+<p>App 里<strong>没有任何网络代码</strong>：没有账号、没有服务器、没有统计分析、没有广告。屏幕使用时间的数据永远不会离开你的手机。详见<a href="privacy.html">隐私政策</a>。</p>
+
+<nav><a href="privacy.html">隐私政策</a><a href="support.html">帮助</a></nav>
+<footer>© 2026 Pawse</footer>
+</main>
+</body>
+</html>

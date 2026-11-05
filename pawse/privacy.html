@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隐私政策 · Pawse 宠物管家</title>
+<style>
+/* Pawse 的公开页面。设计令牌抄自 design/handoff/DESIGN_HANDOFF.md 第 1 节，
+   和 App 里的 Theme.swift 是同一套，这样从 App Store 点进来不会像两个产品。 */
+:root {
+  --ground: #EEF1EC;
+  --surface: #FBFCFA;
+  --ink: #1E2622;
+  --ink-secondary: #59635E;
+  --accent: #C4491E;
+  --track: #D3DBD5;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #141917;
+    --surface: #1E2622;
+    --ink: #F3F6F2;
+    --ink-secondary: #B9C3BD;
+    --accent: #E87351;
+    --track: #39413C;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0 20px 64px;
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.75 -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 680px; margin: 0 auto; }
+header { padding: 48px 0 8px; }
+h1 { font-size: 28px; line-height: 1.3; margin: 0 0 8px; }
+h2 { font-size: 19px; margin: 36px 0 8px; }
+h3 { font-size: 16px; margin: 24px 0 4px; }
+p, ul { margin: 12px 0; }
+ul { padding-left: 20px; }
+li { margin: 6px 0; }
+a { color: var(--accent); }
+.lead {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-weight: 700;
+}
+.meta { color: var(--ink-secondary); font-size: 14px; margin: 0; }
+hr { border: none; border-top: 1px solid var(--track); margin: 40px 0; }
+nav { margin: 24px 0 0; font-size: 14px; }
+nav a { margin-right: 16px; }
+footer { margin-top: 48px; color: var(--ink-secondary); font-size: 14px; }
+code { background: var(--surface); padding: 2px 6px; border-radius: 6px; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>隐私政策</h1>
+  <p class="meta">Pawse 宠物管家 · 更新日期 2026 年 11 月 5 日</p>
+</header>
+
+<p class="lead">Pawse 不收集、不上传你的任何数据。屏幕使用时间的数据永远不会离开你的手机。</p>
+
+<h2>我们用到了什么</h2>
+<ul>
+  <li><strong>屏幕使用时间（Screen Time）</strong>：用来知道你今天在自己选的那几个 App 上一共刷了多久，并在刷太久时挡一下。Pawse 拿到的只是系统每满 5 分钟告诉它一次的「今天加起来到第几分钟了」，<strong>看不到你打开的是哪个 App，也看不到你在里面做了什么</strong>。你选的 App 名单只以系统加密过的标记保存在你的手机上，我们自己也读不出是哪几个 App。</li>
+  <li><strong>统计页「系统记录的今天」</strong>：那张卡片里精确到分钟的数，是苹果系统交给一个隔离扩展画出来的。那个扩展不能联网、不能往任何地方写东西，画出来的数只显示在你的屏幕上，<strong>Pawse 本身读不到、也存不下</strong>。</li>
+  <li><strong>运动与健身（计步）</strong>：只在「走 20 步」那件任务里用，数你从打开任务页开始走了几步。</li>
+  <li><strong>加速度计</strong>：只在「看远处 2 分钟」那件任务里用，判断手机有没有放下。</li>
+  <li><strong>提醒事项</strong>：<strong>只有你自己在设置里指定了一个清单之后才会用</strong>。用来把那个清单里没完成的事项列出来，以及在你点一下时把它标记为完成。只读你指定的那一个清单，不碰别的清单，不新建、不删除、不修改标题，也不会上传。不想用这件任务就别指定清单，App 不会要这个权限。</li>
+  <li><strong>通知</strong>：刷太久、借的时间快到、这一局游戏快结束时，由宠物提醒你。</li>
+</ul>
+
+<h2>数据存在哪里</h2>
+<p>所有数据——宠物状态、每天的用量、你做过的任务、希望值——都只存在你手机上 Pawse 的存储空间里（包括 Pawse 和它的小组件、扩展共用的那一块）。</p>
+<p>锁屏、灵动岛和主屏小组件上会显示宠物状态和今天大约刷了多久（按半小时往下取）。这只是显示在你自己的屏幕上；不想让别人看到，可以在锁屏上把它划掉，或者在系统设置里关掉 Pawse 的「实时活动」。</p>
+
+<h2>我们不做什么</h2>
+<ul>
+  <li>App 里<strong>没有任何网络代码</strong>：没有账号、没有服务器、没有云同步、没有统计分析、没有广告。</li>
+  <li>不追踪你，不和任何第三方共享数据。</li>
+  <li>不出售任何东西：App 完全免费，没有内购。</li>
+</ul>
+
+<h2>你的数据你说了算</h2>
+<ul>
+  <li>删除 App，所有数据随之删除。</li>
+  <li>设置里可以把自己的使用记录导出成表格文件（CSV），文件只会交给你选择的地方（比如存到「文件」App）。导出的内容里没有 App 名称、没有宠物名字，也没有提醒事项的内容。</li>
+</ul>
+
+<h2>联系我们</h2>
+<p>有任何问题，请到 <a href="https://github.com/Eylon-Liu/portfolio/issues">GitHub Issues</a> 留言，标题里写上「Pawse」。</p>
+
+<hr>
+
+<h1 id="en">Privacy Policy (English)</h1>
+<p class="meta">Pawse · Updated 5 November 2026</p>
+
+<p class="lead">Pawse collects nothing and sends nothing. Screen Time data never leaves your device.</p>
+
+<ul>
+  <li>Pawse uses Screen Time with <strong>individual authorization</strong> only to know how long you have used the apps you chose — the system tells it each time their combined total passes another 5 minutes — and to shield them when you go over. It cannot see which apps you use or what you do in them.</li>
+  <li>The minute-accurate “system record” card on the Stats screen is drawn by a sandboxed Device Activity Report extension. The system gives the data only to that extension, which cannot use the network or write anything, so <strong>Pawse itself never sees those numbers</strong>.</li>
+  <li>The Lock Screen, Dynamic Island and Home Screen widget show your pet and roughly how long you have used those apps today (rounded down to the half hour). Swipe it away or turn off Live Activities for Pawse in Settings if you would rather not show it.</li>
+  <li>Step counting and the accelerometer are used only inside the “walk 20 steps” and “look far away for two minutes” tasks.</li>
+  <li>Reminders access is requested only if you choose a specific list in Settings. Pawse reads the unfinished items in that one list and marks an item complete when you tap it. It never touches other lists, never creates or deletes anything, and never uploads them.</li>
+  <li>Everything is stored on your device, in Pawse’s own storage and the App Group it shares with its extensions. The app contains <strong>no networking code</strong>: no account, no server, no analytics, no ads, no tracking, no third parties.</li>
+  <li>Deleting the app deletes all of its data.</li>
+</ul>
+
+<p>Contact: <a href="https://github.com/Eylon-Liu/portfolio/issues">GitHub Issues</a> (please put "Pawse" in the title).</p>
+
+<nav><a href="index.html">首页</a><a href="support.html">帮助</a></nav>
+<footer>© 2026 Pawse</footer>
+</main>
+</body>
+</html>
