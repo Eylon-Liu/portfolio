@@ -47,7 +47,7 @@
 
 <header>
   <h1>FamilyVitals — Privacy Policy</h1>
-  <p class="sub">Last updated: 13 August 2026 · <a href="#zh">中文版本</a></p>
+  <p class="sub">Last updated: 12 November 2026 · <a href="#zh">中文版本</a></p>
 </header>
 
 <p>FamilyVitals is a personal health-record app for iPhone. This policy explains exactly what happens to the information you put into it.</p>
@@ -57,22 +57,25 @@
   <ul>
     <li>Your records are stored <strong>only on your device</strong>. The developer operates no server and receives none of your data.</li>
     <li>There is <strong>no account, no sign-in, no analytics, no advertising, and no tracking</strong>.</li>
-    <li>AI features are <strong>off until you supply your own API key</strong> for Google Gemini or DeepSeek. Only then, and only when you tap an AI button, is anything sent off your device — directly from your phone to that provider, under your own account.</li>
+    <li>Reports are <strong>read on your device</strong> by default, using Apple's built-in text recognition. Nothing is sent anywhere to do this.</li>
+    <li>AI features are <strong>off until you supply your own API key</strong> for Google Gemini, ZhiPu GLM (智谱) or DeepSeek. Only then, and only when you choose AI reading or tap an AI button, is anything sent off your device — directly from your phone to that provider, under your own account.</li>
   </ul>
 </div>
 
 <h2>1. What FamilyVitals stores, and where</h2>
-<p>Everything you enter — profiles, medical reports, uploaded report files (PDFs and photos), lab values, conditions, and any AI text you have generated — is written to your device's local app storage. It is not uploaded anywhere by the app itself.</p>
+<p>Everything you enter — profiles, medical reports, lab values, conditions, medications, follow-ups, and any AI text you have generated — is written to your device's local app storage. It is not uploaded anywhere by the app itself.</p>
+<p>By default only the information read from a report is kept, not a copy of the PDF or photo you picked. If you turn on "Keep a copy of uploaded files" in Settings, the files are also stored in the app's local storage.</p>
+<p>API keys are kept in the iOS Keychain, readable only by FamilyVitals on this device and not included in backups. Follow-up reminders are local notifications scheduled on your phone. If you turn on the app lock, Face ID, Touch ID or your passcode is checked by iOS; FamilyVitals never receives any biometric data.</p>
 <p>If you have iCloud Backup or encrypted local backups enabled on your iPhone, this data is included in those backups, which are governed by <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a> and not by FamilyVitals.</p>
 
 <h2>2. What the developer collects</h2>
 <p><strong>Nothing.</strong> FamilyVitals has no backend service. There is no telemetry, no crash reporting SDK, no analytics SDK, and no advertising SDK in the app. The developer cannot see your records, cannot see your usage, and has no ability to retrieve your data.</p>
 
 <h2>3. Third-party AI processing</h2>
-<p>FamilyVitals can use an external AI provider to read your uploaded report files and to write plain-language summaries. This is optional and inactive by default.</p>
+<p>Without any setup, FamilyVitals reads reports on your device with Apple's Vision text recognition; no data leaves the phone. Optionally, it can use an external AI provider to read report files and to write plain-language summaries. This is inactive by default.</p>
 
 <h3>How it is turned on</h3>
-<p>You must obtain your own API key from Google or DeepSeek and enter it in Settings. The key is stored on your device and is used only to authenticate your own requests. The developer never receives, sees, or proxies your key or your requests — network calls go directly from your iPhone to the provider.</p>
+<p>You must obtain your own API key from Google, ZhiPu or DeepSeek and enter it in Settings. The key is stored in the iOS Keychain on your device and is used only to authenticate your own requests. The developer never receives, sees, or proxies your key or your requests — network calls go directly from your iPhone to the provider.</p>
 
 <h3>What is sent, and when</h3>
 <p>Data is transmitted only at the moment you tap an AI action (extracting a report, or generating an analysis, health summary, doctor report, or explanation of abnormal results). Depending on the action, the request may contain:</p>
@@ -82,6 +85,7 @@
   <tr><td>Report details</td><td>Title, date, type, body part, hospital, doctor, findings, conclusion, recommendations</td></tr>
   <tr><td>Lab results</td><td>Test names, values, units, reference ranges, and whether each is high, low or normal</td></tr>
   <tr><td>Conditions</td><td>Condition names and their status (active, monitoring, resolved)</td></tr>
+  <tr><td>Medications</td><td>Names, doses and frequency of current medications (doctor report only)</td></tr>
   <tr><td>Profile details</td><td>The profile's display name, gender, and recorded allergies</td></tr>
 </table>
 <p>Nothing else is transmitted. FamilyVitals does not send your device identifiers, contacts, location, photos other than the report file you chose, or any advertising identifier.</p>
@@ -89,6 +93,7 @@
 <h3>Who receives it</h3>
 <ul>
   <li><strong>Google (Gemini API)</strong> — <a href="https://ai.google.dev/gemini-api/terms">API terms</a> · <a href="https://policies.google.com/privacy">privacy policy</a></li>
+  <li><strong>ZhiPu AI (智谱 GLM, via open.bigmodel.cn)</strong> — governed by ZhiPu's terms and privacy policy for the account that issued your key</li>
   <li><strong>DeepSeek</strong> — <a href="https://platform.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html">privacy policy</a></li>
 </ul>
 <p>Once data reaches the provider, that provider's terms and privacy policy govern how it is handled, retained, and whether it may be used to improve their models. Their retention practices differ between free and paid API tiers. Please read the terms of the account whose key you are using before enabling AI features on sensitive records.</p>
@@ -105,7 +110,7 @@
 <ul>
   <li>Delete an individual profile in the app to remove its records, attached files, and cached AI text.</li>
   <li>Delete the app from your iPhone to remove all FamilyVitals data from the device.</li>
-  <li>To remove data already processed by Google or DeepSeek, contact that provider or manage it in your account with them — the developer has no access to it.</li>
+  <li>To remove data already processed by Google, ZhiPu or DeepSeek, contact that provider or manage it in your account with them — the developer has no access to it.</li>
 </ul>
 
 <h2>6. Children</h2>
@@ -124,7 +129,7 @@
 
 <header>
   <h1>FamilyVitals — 隐私政策</h1>
-  <p class="sub">最后更新：2026 年 8 月 13 日 · <a href="#">English version</a></p>
+  <p class="sub">最后更新：2026 年 11 月 12 日 · <a href="#">English version</a></p>
 </header>
 
 <p>FamilyVitals 是一款 iPhone 个人健康档案应用。本政策说明你录入的信息究竟会经历什么。</p>
@@ -134,22 +139,25 @@
   <ul>
     <li>你的记录<strong>仅保存在你的设备上</strong>。开发者没有任何服务器，也不会收到你的任何数据。</li>
     <li><strong>无账号、无登录、无统计分析、无广告、无追踪。</strong></li>
-    <li>AI 功能<strong>在你填写自己的 Google Gemini 或 DeepSeek API Key 之前处于关闭状态</strong>。只有在你主动点击 AI 按钮时，数据才会离开设备，并且是从你的手机直接发送给该服务商、使用你自己的账号。</li>
+    <li>报告默认<strong>在你的设备上识别</strong>，使用苹果系统自带的文字识别，整个过程不发送任何数据。</li>
+    <li>AI 功能<strong>在你填写自己的 Google Gemini、智谱 GLM 或 DeepSeek API Key 之前处于关闭状态</strong>。只有在你选择 AI 识别或主动点击 AI 按钮时，数据才会离开设备，并且是从你的手机直接发送给该服务商、使用你自己的账号。</li>
   </ul>
 </div>
 
 <h2>1. 存储什么、存在哪里</h2>
-<p>你录入的全部内容——档案、检查报告、上传的报告文件（PDF 与照片）、检验数值、病史记录，以及你生成过的 AI 文本——都写入设备本地的应用存储空间。应用本身不会将其上传到任何地方。</p>
+<p>你录入的全部内容——档案、检查报告、检验数值、病史记录、用药、复查提醒，以及你生成过的 AI 文本——都写入设备本地的应用存储空间。应用本身不会将其上传到任何地方。</p>
+<p>默认只保存从报告中识别出的信息，不另存你所选 PDF 或照片的副本。如果你在设置中开启「保留上传的原始文件」，文件也会保存在应用的本地存储中。</p>
+<p>API Key 保存在 iOS 钥匙串中，仅本设备上的 FamilyVitals 可以读取，且不会包含在备份里。复查提醒是在你手机上设置的本地通知。如果你开启应用锁，Face ID、触控 ID 或锁屏密码由 iOS 验证，FamilyVitals 不会获得任何生物特征数据。</p>
 <p>如果你的 iPhone 开启了 iCloud 备份或加密的本地备份，这些数据会包含在备份中。备份适用<a href="https://www.apple.com/legal/privacy/">苹果的隐私政策</a>，不受 FamilyVitals 管辖。</p>
 
 <h2>2. 开发者收集什么</h2>
 <p><strong>不收集任何内容。</strong>FamilyVitals 没有后端服务，应用中不含任何遥测、崩溃上报 SDK、统计分析 SDK 或广告 SDK。开发者看不到你的记录，看不到你的使用情况，也无法取回你的数据。</p>
 
 <h2>3. 第三方 AI 处理</h2>
-<p>FamilyVitals 可以调用外部 AI 服务来识别你上传的报告文件，并撰写通俗易懂的摘要。此功能为可选，默认不启用。</p>
+<p>无需任何设置，FamilyVitals 即可使用苹果 Vision 文字识别在设备上读取报告，数据不会离开手机。此外，你也可以选择调用外部 AI 服务来识别报告文件、撰写通俗易懂的摘要。此功能默认不启用。</p>
 
 <h3>如何启用</h3>
-<p>你需要自行从 Google 或 DeepSeek 获取 API Key 并填入设置中。该 Key 保存在你的设备上，仅用于验证你自己的请求。开发者不会收到、看到或中转你的 Key 与请求——网络请求由你的 iPhone 直接发往服务商。</p>
+<p>你需要自行从 Google、智谱或 DeepSeek 获取 API Key 并填入设置中。该 Key 保存在你设备的 iOS 钥匙串中，仅用于验证你自己的请求。开发者不会收到、看到或中转你的 Key 与请求——网络请求由你的 iPhone 直接发往服务商。</p>
 
 <h3>发送什么、何时发送</h3>
 <p>只有在你点击 AI 操作（提取报告、生成分析 / 健康摘要 / 医生报告 / 异常指标解读）的那一刻才会传输数据。根据操作不同，请求可能包含：</p>
@@ -159,6 +167,7 @@
   <tr><td>报告信息</td><td>标题、日期、类型、检查部位、医院、医生、检查发现、结论、建议</td></tr>
   <tr><td>检验结果</td><td>项目名称、数值、单位、参考范围，以及偏高 / 偏低 / 正常的判定</td></tr>
   <tr><td>病史记录</td><td>病症名称及其状态（活跃中、观察中、已解决）</td></tr>
+  <tr><td>用药</td><td>当前用药的名称、剂量和用法（仅医生报告）</td></tr>
   <tr><td>档案信息</td><td>档案的显示名称、性别、已记录的过敏史</td></tr>
 </table>
 <p>除此之外不会传输任何内容。FamilyVitals 不会发送设备标识符、通讯录、位置信息、你所选报告文件之外的照片，或任何广告标识符。</p>
@@ -166,6 +175,7 @@
 <h3>数据发往何处</h3>
 <ul>
   <li><strong>Google（Gemini API）</strong> — <a href="https://ai.google.dev/gemini-api/terms">API 条款</a> · <a href="https://policies.google.com/privacy">隐私政策</a></li>
+  <li><strong>智谱 AI（智谱 GLM，经 open.bigmodel.cn）</strong> — 适用签发你 API Key 的智谱账号所对应的服务条款与隐私政策</li>
   <li><strong>DeepSeek</strong> — <a href="https://platform.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html">隐私政策</a></li>
 </ul>
 <p>数据到达服务商之后，其处理、留存方式，以及是否可能被用于改进模型，均由该服务商的条款和隐私政策决定。免费与付费 API 层级的留存策略通常并不相同。在对敏感记录启用 AI 功能之前，请先阅读你所使用账号对应的条款。</p>
@@ -182,7 +192,7 @@
 <ul>
   <li>在应用内删除某个档案，即可移除其记录、附件文件与缓存的 AI 文本。</li>
   <li>从 iPhone 上删除应用，即可移除设备上全部 FamilyVitals 数据。</li>
-  <li>如需删除已被 Google 或 DeepSeek 处理的数据，请联系该服务商或在你的账号中自行管理——开发者无权访问这些数据。</li>
+  <li>如需删除已被 Google、智谱或 DeepSeek 处理的数据，请联系该服务商或在你的账号中自行管理——开发者无权访问这些数据。</li>
 </ul>
 
 <h2>6. 未成年人</h2>
