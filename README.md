@@ -10,19 +10,20 @@ This repo showcases selected projects. Some are open source and linked below; fo
 
 **iOS app for managing personal and family health records with AI-powered data extraction.**
 
-Upload a medical report as a PDF or photo, and the app automatically extracts lab results, dates, hospital names, and reference ranges using AI vision models. Designed for families who want to track health trends over time without manual data entry.
+Upload a medical report as a PDF or photo, and the app extracts lab results, dates, hospital names, and reference ranges — on the phone with Apple Vision OCR, or with an AI vision model if you add an API key. Designed for families who want to track health trends over time without manual data entry.
 
 <p align="center">
-  <img src="images/overview.png" width="230" alt="Dashboard — at-a-glance health metrics and abnormal indicator trends" />
+  <img src="images/overview.png" width="230" alt="Overview — what needs attention, upcoming follow-ups and out-of-range results" />
   &nbsp;&nbsp;
-  <img src="images/reports.png" width="230" alt="Reports — organized by category with AI-generated summaries" />
+  <img src="images/reports.png" width="230" alt="Reports — grouped by year, with type, clinic and abnormal count" />
   &nbsp;&nbsp;
   <img src="images/me.png" width="230" alt="Profile — multi-family-member support" />
 </p>
+<p align="center"><sub>Screenshots use a fictional demo profile, not real medical records.</sub></p>
 
 **What it does:**
-- Extracts structured data from medical reports via AI (Gemini, Qwen, DeepSeek) — handles PDFs, photos, and batch imports
-- Tracks 60+ lab indicators across reports, flags abnormal values, and charts trends over time
+- Extracts structured data from medical reports on-device (Vision OCR + a rule-based parser, no API key) or via AI (Gemini, ZhiPu GLM, DeepSeek) — handles PDFs, photos, scans and batch imports
+- Tracks lab results across reports, shows each against its reference range, flags abnormal values, and charts trends over time
 - Supports multiple family member profiles with independent data
 - Fully bilingual (Chinese/English) with on-device data storage — no account or server needed
 
@@ -30,8 +31,8 @@ Upload a medical report as a PDF or photo, and the app automatically extracts la
 - SwiftUI + CoreData, iOS 16+
 - Three AI provider integrations with automatic failover and batch-to-single fallback on token overflow
 - Multi-pass text extraction for long reports (chunked processing with deduplication-aware merging)
-- Configurable API endpoints for Alibaba Cloud workspace keys
 - XcodeGen-based project configuration
+- API keys in the iOS Keychain; no account, no server
 - Published on TestFlight
 
 ---
