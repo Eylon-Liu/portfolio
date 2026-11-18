@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FamilyVitals — Family lab reports, organized</title>
+<meta name="description" content="Photograph a lab report and FamilyVitals turns it into results on their reference range, trends, medications and follow-ups for everyone in the family. No account. Data stays on your iPhone.">
+<meta property="og:title" content="FamilyVitals — Family lab reports, organized">
+<meta property="og:description" content="Results on their reference range, trends, medications and follow-ups for the whole family. No account, works without AI, data stays on your iPhone.">
+<meta property="og:image" content="https://eylon-liu.github.io/portfolio/familyvitals/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+/* Colors are the app's own FV tokens (FVTheme.swift), so the page and the app read as one product.
+   Color only means status: red high, blue low, teal tappable, normal uncolored. */
+:root {
+  --ground: #F4F5F2; --card: #FFFFFF; --fill: #E7EAE6; --line: #E3E6E2;
+  --ink: #16201F; --ink2: #55615F;
+  --brand: #0E5A5E; --on-brand: #FFFFFF; --brand-tint: #E3EFEE;
+  --range: #9CC5C2; --track: #E3E6E2;
+  --high: #B5391F; --high-tint: #FBE9E4; --low: #2456A6; --low-tint: #E6EEFA;
+  --bezel: #121716; --shadow: 0 24px 60px rgba(22, 32, 31, .16);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0C1110; --card: #171D1C; --fill: #232B2A; --line: #2A3331;
+    --ink: #EEF2F0; --ink2: #9BA7A4;
+    --brand: #5CC2BE; --on-brand: #062524; --brand-tint: #17302F;
+    --range: #3E7673; --track: #2A3331;
+    --high: #FF8A70; --high-tint: #3A1E17; --low: #7FB0FF; --low-tint: #17263D;
+    --bezel: #2A3331; --shadow: 0 24px 60px rgba(0, 0, 0, .5);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { display: block; max-width: 100%; height: auto; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* Language: English by default (works with no JS); 中文 switches with one tap. */
+html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: none !important; }
+
+/* Top bar */
+.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--ground) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.brand:hover { text-decoration: none; }
+.brand img { width: 30px; height: 30px; border-radius: 7px; }
+.top nav { margin-left: auto; display: flex; align-items: center; gap: 18px; font-size: 15px; }
+.top nav a { color: var(--ink2); }
+.lang { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 5px 12px;
+  font: inherit; font-size: 14px; cursor: pointer; }
+.lang:hover { border-color: var(--brand); }
+@media (max-width: 560px) { .top nav a.hide-s { display: none; } }
+
+/* Hero */
+.hero { padding: 64px 0 40px; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.eyebrow { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 600; color: var(--brand);
+  background: var(--brand-tint); padding: 5px 12px; border-radius: 999px; }
+h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.06; letter-spacing: -.035em; margin: 18px 0 18px; text-wrap: balance; }
+html[lang^="zh"] h1 { letter-spacing: -.01em; line-height: 1.18; }
+.lead { font-size: clamp(18px, 2.1vw, 21px); color: var(--ink2); margin: 0 0 26px; max-width: 34em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; padding: 0; list-style: none; }
+.chips li { font-size: 14px; font-weight: 600; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+.chips li::before { content: "✓"; color: var(--brand); margin-right: 6px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cta { display: inline-flex; align-items: center; gap: 10px; background: var(--brand); color: var(--on-brand); font-weight: 600;
+  padding: 13px 22px; border-radius: 14px; font-size: 16px; }
+.cta:hover { text-decoration: none; filter: brightness(1.08); }
+.cta small { display: block; font-weight: 500; font-size: 12px; opacity: .85; line-height: 1.2; }
+.cta b { display: block; line-height: 1.2; }
+.cta svg { width: 22px; height: 22px; flex: none; }
+.ghost { font-weight: 600; padding: 13px 6px; }
+.hero-phones { position: relative; height: 600px; }
+.hero-phones .phone { position: absolute; }
+.hero-phones .p1 { width: 250px; right: 8px; top: 0; z-index: 2; }
+.hero-phones .p2 { width: 228px; right: 196px; top: 64px; transform: rotate(-5deg); }
+
+/* Phone frame: the screenshot is already a full screen, so only the bezel and corners are drawn. */
+.phone { border-radius: 13% / 6%; box-shadow: 0 0 0 7px var(--bezel), var(--shadow); overflow: hidden; background: var(--card); }
+.phone img { width: 100%; height: auto; aspect-ratio: 1320 / 2868; }
+
+section { padding: 72px 0; }
+.kicker { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); margin: 0 0 10px; }
+html[lang^="zh"] .kicker { letter-spacing: .02em; }
+h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.12; letter-spacing: -.025em; margin: 0 0 14px; text-wrap: balance; }
+html[lang^="zh"] h2 { letter-spacing: 0; line-height: 1.25; }
+.sub { color: var(--ink2); font-size: 18px; max-width: 40em; margin: 0; }
+
+/* Range demo: the same anatomy as LabValueRow in the app. */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.demo { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 6px 22px; box-shadow: var(--shadow); }
+.row { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row-top { display: flex; align-items: baseline; gap: 8px; }
+.row-name { font-weight: 650; font-size: 17px; white-space: nowrap; }
+.row-alt { color: var(--ink2); font-size: 13px; }
+.row-val { margin-left: auto; font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; }
+.row-unit { color: var(--ink2); font-size: 13px; }
+.tag { font-size: 13px; font-weight: 650; border-radius: 7px; padding: 2px 8px; align-self: center; white-space: nowrap; }
+.is-low .row-val { color: var(--low); } .is-low .tag { color: var(--low); background: var(--low-tint); }
+.is-high .row-val { color: var(--high); } .is-high .tag { color: var(--high); background: var(--high-tint); }
+.bar { position: relative; height: 6px; border-radius: 3px; background: var(--track); margin: 14px 0 10px; }
+.bar .ref { position: absolute; left: 25%; width: 50%; top: 0; bottom: 0; border-radius: 3px; background: var(--range); }
+.bar .dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  background: var(--ink); border: 2px solid var(--card); left: 50%; transition: left 1.1s cubic-bezier(.2, .8, .2, 1); }
+.is-low .dot { background: var(--low); } .is-high .dot { background: var(--high); }
+.js .demo:not(.in) .dot { left: 50% !important; }
+.row-meta { color: var(--ink2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.points { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+.points li { display: flex; gap: 12px; }
+.points .sw { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+
+/* Screens */
+.screens { padding-bottom: 40px; }
+.strip { display: flex; gap: 34px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 40px 20px 50px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.strip::-webkit-scrollbar { display: none; }
+.strip figure { margin: 0; flex: none; width: 250px; scroll-snap-align: center; }
+.strip figcaption { margin-top: 22px; font-size: 15px; color: var(--ink2); text-align: center; }
+.strip figcaption b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 2px; }
+@media (min-width: 1120px) { .strip { padding-left: calc((100vw - 1080px) / 2 + 20px); padding-right: calc((100vw - 1080px) / 2 + 20px); } }
+.strip-nav { display: flex; gap: 10px; justify-content: flex-end; }
+.strip-nav button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font-size: 18px; cursor: pointer; }
+.strip-nav button:hover { border-color: var(--brand); color: var(--brand); }
+.screens-head { display: flex; align-items: flex-end; gap: 20px; }
+.screens-head > div { flex: 1; }
+
+/* Features */
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+.card h3 { font-size: 17px; margin: 14px 0 6px; letter-spacing: -.01em; }
+.card p { margin: 0; color: var(--ink2); font-size: 15px; line-height: 1.55; }
+.ic { width: 42px; height: 42px; border-radius: 12px; background: var(--brand-tint); display: grid; place-items: center; }
+.ic svg { width: 22px; height: 22px; fill: none; stroke: var(--brand); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Privacy band */
+.band { background: var(--brand); color: var(--on-brand); border-radius: 28px; padding: 56px; display: grid;
+  grid-template-columns: .9fr 1.1fr; gap: 48px; }
+.band .kicker { color: inherit; opacity: .8; }
+.band .sub { color: inherit; opacity: .88; }
+.band ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.band li { display: flex; gap: 14px; }
+.band li svg { flex: none; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; }
+.band li b { display: block; }
+.band li span { opacity: .86; font-size: 15px; }
+
+/* AI */
+.providers { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+.providers li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; font-weight: 600; font-size: 15px; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px 16px 62px; position: relative; }
+.steps li::before { content: counter(s); position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brand-tint); color: var(--brand); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+.steps b { display: block; }
+.steps span { color: var(--ink2); font-size: 15px; }
+
+/* Closing */
+.closing { text-align: center; }
+.closing img.appicon { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 22px; box-shadow: var(--shadow); }
+.closing .ctas { justify-content: center; margin-top: 28px; }
+.note { margin: 40px auto 0; max-width: 46em; color: var(--ink2); font-size: 14px; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--ink2); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+footer .wrap span:first-child { margin-right: auto; }
+
+@media (max-width: 960px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .band { grid-template-columns: 1fr; padding: 40px 28px; gap: 28px; }
+}
+@media (max-width: 860px) {
+  .hero { padding-top: 40px; }
+  .hero .wrap, .split { grid-template-columns: 1fr; gap: 36px; }
+  .hero-phones { height: 520px; }
+  .hero-phones .p1 { width: 220px; right: auto; left: 50%; margin-left: -10px; }
+  .hero-phones .p2 { width: 210px; right: auto; left: 50%; margin-left: -200px; top: 56px; }
+  section { padding: 56px 0; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .strip { gap: 22px; }
+  .strip figure { width: 210px; }
+  .strip-nav { display: none; }
+  .hero-phones { height: 440px; }
+  .hero-phones .p1 { width: 190px; margin-left: -30px; }
+  .hero-phones .p2 { width: 175px; margin-left: -150px; top: 48px; }
+  .row-alt { display: none; }
+  .band { border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bar .dot { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <picture>
+        <source srcset="icon-dark.png" media="(prefers-color-scheme: dark)">
+        <img src="icon.png" alt="" width="30" height="30">
+      </picture>
+      FamilyVitals
+    </a>
+    <nav>
+      <a class="hide-s" href="#features"><span data-l="en">Features</span><span data-l="zh">功能</span></a>
+      <a class="hide-s" href="#privacy"><span data-l="en">Privacy</span><span data-l="zh">隐私</span></a>
+      <a href="support.html"><span data-l="en">Support</span><span data-l="zh">帮助</span></a>
+      <button class="lang" type="button" id="lang" aria-label="Switch language"><span data-l="en">中文</span><span data-l="zh">English</span></button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span data-l="en">For iPhone · Free</span><span data-l="zh">iPhone 应用 · 免费</span></span>
+      <h1>
+        <span data-l="en">Your family’s lab reports, organized.</span>
+        <span data-l="zh">全家人的化验单和病历，一处管理。</span>
+      </h1>
+      <p class="lead">
+        <span data-l="en">Photograph a report. FamilyVitals reads it on your iPhone and turns it into results on their reference range, trends over time, medications and follow-ups — for everyone you look after.</span>
+        <span data-l="zh">拍一张化验单，FamilyVitals 直接在手机上读出来，整理成带参考范围的指标、历次趋势、用药和复查提醒。全家人的都在这里。</span>
+      </p>
+      <ul class="chips">
+        <li><span data-l="en">No account</span><span data-l="zh">不用注册</span></li>
+        <li><span data-l="en">Works without AI</span><span data-l="zh">不用 AI 也能用</span></li>
+        <li><span data-l="en">Data stays on your iPhone</span><span data-l="zh">数据只在你的 iPhone 上</span></li>
+      </ul>
+      <div class="ctas">
+        <!-- Replace href with the App Store link once the app is live. -->
+        <a class="cta" id="appstore" href="#get">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>
+          <span><small data-l="en">Coming soon to the</small><small data-l="zh">即将登陆</small><b>App Store</b></span>
+        </a>
+        <a class="ghost" href="#how"><span data-l="en">See how it works ↓</span><span data-l="zh">看看怎么用 ↓</span></a>
+      </div>
+    </div>
+    <div class="hero-phones" aria-hidden="true">
+      <div class="phone p2">
+        <img data-l="en" src="screenshots/en/4-labs.jpg" alt="" width="660" height="1434">
+        <img data-l="zh" src="screenshots/zh/4-labs.jpg" alt="" width="660" height="1434" loading="lazy">
+      </div>
+      <div class="phone p1">
+        <img data-l="en" src="screenshots/en/1-overview.jpg" alt="" width="660" height="1434">
+        <img data-l="zh" src="screenshots/zh/1-overview.jpg" alt="" width="660" height="1434" loading="lazy">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Range bars -->
+<section id="how">
+  <div class="wrap split">
+    <div>
+      <p class="kicker"><span data-l="en">Read at a glance</span><span data-l="zh">一眼看懂</span></p>
+      <h2>
+        <span data-l="en">See how far out of range — not just that it is.</span>
+        <span data-l="zh">不只告诉你异常，还告诉你偏离多少。</span>
+      </h2>
+      <p class="sub">
+        <span data-l="en">Every result is drawn against the reference range printed on its own report, so a value just over the line looks different from one far outside it.</span>
+        <span data-l="zh">每一项指标都画在它自己那张报告印的参考范围上：刚刚超出一点，和远远超出，一眼就分得清。</span>
+      </p>
+      <ul class="points">
+        <li><span class="sw" style="background:var(--low-tint);color:var(--low)">↓</span>
+          <span><span data-l="en"><b>Blue with a down arrow</b> is low.</span><span data-l="zh"><b>蓝色加向下箭头</b>是偏低。</span></span></li>
+        <li><span class="sw" style="background:var(--high-tint);color:var(--high)">↑</span>
+          <span><span data-l="en"><b>Red with an up arrow</b> is high or positive.</span><span data-l="zh"><b>红色加向上箭头</b>是偏高或阳性。</span></span></li>
+        <li><span class="sw" style="background:var(--fill);color:var(--ink2)">–</span>
+          <span><span data-l="en"><b>Normal stays quiet.</b> No color, so what matters stands out. Arrows mean it never depends on color alone.</span><span data-l="zh"><b>正常的不上色</b>，需要留意的才会跳出来。有箭头，所以不靠颜色也能看懂。</span></span></li>
+      </ul>
+    </div>
+    <div class="demo" id="demo" role="img" aria-label="Example: hemoglobin 10.9 g/dL, low; fasting glucose 108 mg/dL, high; TSH 2.1 mIU/L, normal.">
+      <div class="row is-low">
+        <div class="row-top">
+          <span class="row-name"><span data-l="en">Hemoglobin</span><span data-l="zh">血红蛋白</span></span>
+          <span class="row-alt" data-l="zh">Hemoglobin</span>
+          <span class="row-val">10.9</span><span class="row-unit">g/dL</span>
+          <span class="tag"><span data-l="en">↓ Low</span><span data-l="zh">↓ 偏低</span></span>
+        </div>
+        <div class="bar"><i class="ref"></i><i class="dot" style="left:9.3%"></i></div>
+        <div class="row-meta"><span data-l="en">Ref. 12.0–15.5</span><span data-l="zh">参考 12.0–15.5</span> · 2026-10-20 · CBC</div>
+      </div>
+      <div class="row is-high">
+        <div class="row-top">
+          <span class="row-name"><span data-l="en">Fasting glucose</span><span data-l="zh">空腹血糖</span></span>
+          <span class="row-alt" data-l="zh">Glucose</span>
+          <span class="row-val">108</span><span class="row-unit">mg/dL</span>
+          <span class="tag"><span data-l="en">↑ High</span><span data-l="zh">↑ 偏高</span></span>
+        </div>
+        <div class="bar"><i class="ref"></i><i class="dot" style="left:90.5%"></i></div>
+        <div class="row-meta"><span data-l="en">Ref. 70–99</span><span data-l="zh">参考 70–99</span> · 2026-05-14 · Metabolic Panel</div>
+      </div>
+      <div class="row">
+        <div class="row-top">
+          <span class="row-name">TSH</span>
+          <span class="row-alt" data-l="zh"><span>促甲状腺激素</span></span>
+          <span class="row-val">2.1</span><span class="row-unit">mIU/L</span>
+        </div>
+        <div class="bar"><i class="ref"></i><i class="dot" style="left:48.6%"></i></div>
+        <div class="row-meta"><span data-l="en">Ref. 0.4–4.0</span><span data-l="zh">参考 0.4–4.0</span> · 2026-10-20 · TSH</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Screens -->
+<section class="screens" aria-labelledby="screens-h">
+  <div class="wrap screens-head">
+    <div>
+      <p class="kicker"><span data-l="en">Inside the app</span><span data-l="zh">看看 App 里</span></p>
+      <h2 id="screens-h"><span data-l="en">Four tabs. Everything in its place.</span><span data-l="zh">四个页签，各归其位。</span></h2>
+    </div>
+    <div class="strip-nav">
+      <button type="button" data-dir="-1" aria-label="Previous">←</button>
+      <button type="button" data-dir="1" aria-label="Next">→</button>
+    </div>
+  </div>
+  <div class="strip" id="strip">
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/1-overview.jpg" alt="Overview: 9 results need attention, upcoming follow-ups, out-of-range results" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/1-overview.jpg" alt="概览" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Overview</b><b data-l="zh">概览</b><span data-l="en">What needs attention, and what’s next.</span><span data-l="zh">先告诉你哪些要留意、下一步做什么。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/2-reports.jpg" alt="Reports grouped by year with clinic and abnormal count" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/2-reports.jpg" alt="报告" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Reports</b><b data-l="zh">报告</b><span data-l="en">Every report by date, with what was off.</span><span data-l="zh">按时间排好，异常几项一目了然。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/3-report-detail.jpg" alt="Report detail with abnormal results and an AI explanation" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/3-report-detail.jpg" alt="报告详情" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Report detail</b><b data-l="zh">报告详情</b><span data-l="en">Out-of-range results first, plus an optional AI explanation.</span><span data-l="zh">异常指标排在前面，可选 AI 解读。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/4-labs.jpg" alt="Labs tab: out of range, starred, all" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/4-labs.jpg" alt="指标" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Labs</b><b data-l="zh">指标</b><span data-l="en">Every test you’ve had: out of range, starred, all.</span><span data-l="zh">所有化验项：异常、关注、全部。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/5-lab-detail.jpg" alt="Hemoglobin trend chart with every past result and its source report" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/5-lab-detail.jpg" alt="指标趋势" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Trends</b><b data-l="zh">趋势</b><span data-l="en">A chart over time, and the report each value came from.</span><span data-l="zh">历次变化，每个数都能点回原报告核对。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/6-care-plan.jpg" alt="Medications and follow-ups" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/6-care-plan.jpg" alt="用药与复查" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Meds &amp; follow-ups</b><b data-l="zh">用药与复查</b><span data-l="en">Reminders, and a prep sheet for the next visit.</span><span data-l="zh">到期提醒，还有就诊准备清单。</span></figcaption>
+    </figure>
+    <figure>
+      <div class="phone"><img data-l="en" src="screenshots/en/7-record.jpg" alt="One person's record and the rest of the family" width="660" height="1434" loading="lazy"><img data-l="zh" src="screenshots/zh/7-record.jpg" alt="档案" width="660" height="1434" loading="lazy"></div>
+      <figcaption><b data-l="en">Record</b><b data-l="zh">档案</b><span data-l="en">One record per person, the whole family in one app.</span><span data-l="zh">每人一份档案，全家一个 App。</span></figcaption>
+    </figure>
+  </div>
+  <p class="note" style="margin-top:0;text-align:center;padding:0 20px"><span data-l="en">Screens show a fictional demo profile.</span><span data-l="zh">截图使用虚构的演示资料。</span></p>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="wrap">
+    <p class="kicker"><span data-l="en">Features</span><span data-l="zh">功能</span></p>
+    <h2><span data-l="en">Built for the reports you actually get.</span><span data-l="zh">为你手里真实的报告而做。</span></h2>
+    <p class="sub"><span data-l="en">Clinic printouts, hospital PDFs, a photo of a page on the kitchen table — in English or Chinese.</span><span data-l="zh">诊所打印件、医院 PDF、随手拍的一页纸，中文英文都行。</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M4 12h16"/></svg></div>
+        <h3><span data-l="en">Scan on your iPhone</span><span data-l="zh">手机上直接识别</span></h3>
+        <p><span data-l="en">Scan paper or pick photos and PDFs. Dates, hospitals and lab values are read on the device — free, offline, no key.</span><span data-l="zh">扫描纸质报告或选照片、PDF，在手机上识别日期、医院和数值。免费、不联网、不要 Key。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M7.5 15l3.5-4 3 2.5 5-6.5"/></svg></div>
+        <h3><span data-l="en">Trends with sources</span><span data-l="zh">趋势可追溯</span></h3>
+        <p><span data-l="en">Open any test for its chart and every past result, each linked back to the report it came from.</span><span data-l="zh">点开任意指标看趋势图和历次结果，每个数都连回来源报告。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg></div>
+        <h3><span data-l="en">Overview first</span><span data-l="zh">先看重点</span></h3>
+        <p><span data-l="en">Opens on what needs attention and when the next follow-up is, not on a wall of numbers.</span><span data-l="zh">打开先看哪些要留意、下次复查是什么时候，而不是一堆数字。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="8.5" width="19" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="M9.5 9.5l5 5"/></svg></div>
+        <h3><span data-l="en">Meds &amp; follow-ups</span><span data-l="zh">用药与复查</span></h3>
+        <p><span data-l="en">Medication list, follow-up reminders, and a one-page visit prep sheet to show the doctor.</span><span data-l="zh">用药清单、复查提醒，还有一页给医生看的就诊准备清单。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.2" cy="9.2" r="2.4"/><path d="M16.5 14.2c2.6.3 4.5 2.4 4.5 5"/></svg></div>
+        <h3><span data-l="en">The whole family</span><span data-l="zh">全家人</span></h3>
+        <p><span data-l="en">A separate record for each person — parents, kids, yourself. Switch with one tap; reports never mix.</span><span data-l="zh">每位家人单独建档：父母、孩子、自己。一键切换，报告不会混。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></div>
+        <h3><span data-l="en">One search</span><span data-l="zh">全局搜索</span></h3>
+        <p><span data-l="en">Reports, results, hospitals and medications, from any tab.</span><span data-l="zh">在任何页签都能搜报告、指标、医院和用药。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="8" height="14" rx="1.6"/><rect x="13" y="5" width="8" height="14" rx="1.6"/><path d="M6 9h2M16 9h2M6 12h2M16 12h2"/></svg></div>
+        <h3><span data-l="en">Imaging side by side</span><span data-l="zh">影像报告对比</span></h3>
+        <p><span data-l="en">Line up ultrasound and imaging reports of the same area to see what changed between visits.</span><span data-l="zh">同一部位的超声、影像报告并排对比，看看两次之间有什么变化。</span></p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M19.5 14.5A7.5 7.5 0 1 1 9.5 4.5a6 6 0 0 0 10 10z"/></svg></div>
+        <h3><span data-l="en">Light, dark, 中文</span><span data-l="zh">深浅色，中英文</span></h3>
+        <p><span data-l="en">Follows your iPhone’s appearance, including dark at night. Fully in English or Chinese.</span><span data-l="zh">跟随系统深浅色（包括夜间自动深色），中文、English 完整切换。</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Privacy -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <p class="kicker"><span data-l="en">Privacy</span><span data-l="zh">隐私</span></p>
+        <h2><span data-l="en">Your health records stay yours.</span><span data-l="zh">你的病历，只属于你。</span></h2>
+        <p class="sub"><span data-l="en">There is no FamilyVitals server. Nothing about you reaches the developer — there is nowhere for it to go.</span><span data-l="zh">FamilyVitals 没有服务器。开发者收不到你的任何数据——根本没有地方可去。</span></p>
+      </div>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M10 18h4"/></svg>
+          <span><b data-l="en">On your iPhone only</b><b data-l="zh">只存在你的 iPhone 上</b><span data-l="en">No account, no sign-in, no ads, no tracking.</span><span data-l="zh">不用账号、不用登录，没有广告和追踪。</span></span></li>
+        <li><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <span><b data-l="en">Optional app lock</b><b data-l="zh">可选应用锁</b><span data-l="en">Face ID, Touch ID or passcode, and the screen is hidden in the app switcher.</span><span data-l="zh">Face ID、Touch ID 或密码；切换 App 时画面会被遮住。</span></span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span><b data-l="en">AI only if you turn it on</b><b data-l="zh">AI 只在你打开时使用</b><span data-l="en">It asks your consent for each provider. Names, ID numbers and contact details are removed on the phone first; original files are never uploaded.</span><span data-l="zh">每个服务商都会先征求你同意。姓名、证件号、联系方式先在手机上去掉，原始文件不会上传。</span></span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M5 19h14"/></svg>
+          <span><b data-l="en">Yours to take with you</b><b data-l="zh">随时带走</b><span data-l="en">Export a full backup any time and import it on a new iPhone.</span><span data-l="zh">随时导出完整备份，换手机直接导入。</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section>
+  <div class="wrap split">
+    <div>
+      <p class="kicker"><span data-l="en">Optional AI reading</span><span data-l="zh">可选 AI 读取</span></p>
+      <h2><span data-l="en">Bring your own key for the hard reports.</span><span data-l="zh">复杂报告，用你自己的 Key。</span></h2>
+      <p class="sub"><span data-l="en">On-device reading handles tidy lab tables. For complex layouts, add your own API key: reading gets more accurate, and you get plain-language explanations of a report and an overall medical summary.</span><span data-l="zh">整齐的化验表，手机上就能读。版式复杂的报告，填上你自己的 API Key：识别更准，还能生成报告解读和整体病历摘要。</span></p>
+      <ul class="providers"><li>Google Gemini</li><li>ZhiPu GLM</li><li>DeepSeek</li></ul>
+    </div>
+    <ol class="steps">
+      <li><b data-l="en">Add a report</b><b data-l="zh">添加报告</b><span data-l="en">Tap +, choose whose record it goes in, then scan, pick photos or PDFs.</span><span data-l="zh">点 +，选好存到谁的档案，扫描或选照片、PDF。</span></li>
+      <li><b data-l="en">Check what was read</b><b data-l="zh">核对识别结果</b><span data-l="en">Review dates, hospital and every value before anything is saved.</span><span data-l="zh">保存之前，日期、医院和每个数值都可以核对修改。</span></li>
+      <li><b data-l="en">Watch it add up</b><b data-l="zh">越用越有用</b><span data-l="en">Each new report extends every trend and updates what needs attention.</span><span data-l="zh">每多一份报告，趋势就更完整，需要留意的也会自动更新。</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- Closing -->
+<section class="closing" id="get">
+  <div class="wrap">
+    <picture>
+      <source srcset="icon-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="appicon" src="icon.png" alt="FamilyVitals app icon" width="96" height="96">
+    </picture>
+    <h2><span data-l="en">Every report, every result, the whole family.</span><span data-l="zh">每一份报告，每一项指标，全家人。</span></h2>
+    <p class="sub" style="margin:0 auto"><span data-l="en">FamilyVitals is free, with no in-app purchases. Coming soon to the App Store in the United States.</span><span data-l="zh">FamilyVitals 免费，没有内购。即将在美国区 App Store 上架。</span></p>
+    <div class="ctas">
+      <a class="cta" href="support.html"><span><b data-l="en">Questions? Visit Support</b><b data-l="zh">有问题？看帮助页</b></span></a>
+      <a class="ghost" href="privacy.html"><span data-l="en">Read the privacy policy</span><span data-l="zh">阅读隐私政策</span></a>
+    </div>
+    <p class="note"><span data-l="en">FamilyVitals organizes your own records and is not medical advice. It does not diagnose or treat any condition. Talk to your doctor before making health decisions.</span><span data-l="zh">FamilyVitals 只是整理你自己的病历，不构成医疗建议，不做诊断或治疗。任何健康决定请咨询医生。</span></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Eylon Liu</span>
+    <a href="support.html"><span data-l="en">Support</span><span data-l="zh">帮助</span></a>
+    <a href="privacy.html"><span data-l="en">Privacy Policy</span><span data-l="zh">隐私政策</span></a>
+    <a href="../"><span data-l="en">Portfolio</span><span data-l="zh">作品集</span></a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  function set(lang) {
+    root.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+    try { localStorage.setItem('fv-lang', lang); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('fv-lang'); } catch (e) {}
+  var q = new URLSearchParams(location.search).get('lang');
+  var lang = q || saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
+  if (lang === 'zh') root.lang = 'zh-Hans';
+  document.getElementById('lang').addEventListener('click', function () {
+    set(root.lang.indexOf('zh') === 0 ? 'en' : 'zh');
+  });
+
+  // Range dots slide from the middle to their value the first time the card is seen.
+  var demo = document.getElementById('demo');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { demo.classList.add('in'); io.disconnect(); } });
+    }, { threshold: 0.5 });
+    io.observe(demo);
+  } else { demo.classList.add('in'); }
+
+  var strip = document.getElementById('strip');
+  document.querySelectorAll('.strip-nav button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      strip.scrollBy({ left: Number(b.dataset.dir) * 568, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body>
+</html>

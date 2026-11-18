@@ -8,9 +8,11 @@ This repo showcases selected projects. Some are open source and linked below; fo
 
 ## FamilyVitals
 
-**iOS app for managing personal and family health records with AI-powered data extraction.**
+**iPhone app that turns a family's lab reports into results you can read at a glance — on the device, with no account.**
 
-Upload a medical report as a PDF or photo, and the app extracts lab results, dates, hospital names, and reference ranges — on the phone with Apple Vision OCR, or with an AI vision model if you add an API key. Designed for families who want to track health trends over time without manual data entry.
+**[Product page](https://eylon-liu.github.io/portfolio/familyvitals/)** · [Support](https://eylon-liu.github.io/portfolio/familyvitals/support.html) · [Privacy policy](https://eylon-liu.github.io/portfolio/familyvitals/privacy.html) · Status: version 1.4 in App Store review prep, launching in the US first (beta on TestFlight)
+
+Photograph a report or pick a PDF. FamilyVitals reads dates, the hospital and every lab value, draws each result against the reference range printed on its own report, and keeps one record per family member. Over time each report extends the trends, and the app leads with what needs attention and when the next follow-up is.
 
 <p align="center">
   <img src="images/overview.png" width="230" alt="Overview — what needs attention, upcoming follow-ups and out-of-range results" />
@@ -22,18 +24,26 @@ Upload a medical report as a PDF or photo, and the app extracts lab results, dat
 <p align="center"><sub>Screenshots use a fictional demo profile, not real medical records.</sub></p>
 
 **What it does:**
-- Extracts structured data from medical reports on-device (Vision OCR + a rule-based parser, no API key) or via AI (Gemini, ZhiPu GLM, DeepSeek) — handles PDFs, photos, scans and batch imports
-- Tracks lab results across reports, shows each against its reference range, flags abnormal values, and charts trends over time
-- Supports multiple family member profiles with independent data
-- Fully bilingual (Chinese/English) with on-device data storage — no account or server needed
+- **Reads reports on the phone.** Apple Vision OCR plus a rule-based parser extract dates, hospitals and lab tables from photos, scans and PDFs — free and offline, no API key. Batch import, and a review step before anything is saved.
+- **Shows how far out of range, not just whether.** Range bars place each value on its report's own reference range; high and low carry an arrow as well as a color, and normal values stay uncolored.
+- **Labs tab and trends.** Every test the person has had (out of range / starred / all); each opens a chart and every past result linked back to its source report.
+- **Overview, meds and follow-ups.** Opens on what needs attention; medication list, follow-up reminders and a one-page visit prep sheet for the doctor.
+- **The whole family.** Separate records per person, switchable from any tab; global search across reports, results, hospitals and medications; side-by-side comparison of imaging reports.
+- **Optional AI reading** with the user's own key (Google Gemini, ZhiPu GLM, DeepSeek) for complex layouts, report explanations and a medical summary.
+- Light and dark appearance, fully bilingual (Chinese / English).
+
+**Privacy by design:**
+- No server, no account, no analytics or ads. Data lives in Core Data on the device, with an optional Face ID / passcode lock and JSON backup export.
+- AI requests go straight from the phone to the provider the user picked. Before the first request to each provider the app asks for consent (App Store Guideline 5.1.2(i)), and the network layer refuses to send without it.
+- Names, ages, ID and record numbers, phones, addresses and e-mails are redacted on the device before any text leaves the phone; page images sent to vision models are masked; original files are never uploaded.
+- Privacy manifest and App Store privacy label declare exactly that.
 
 **Technical highlights:**
-- SwiftUI + CoreData, iOS 16+
-- Three AI provider integrations with automatic failover and batch-to-single fallback on token overflow
-- Multi-pass text extraction for long reports (chunked processing with deduplication-aware merging)
-- XcodeGen-based project configuration
-- API keys in the iOS Keychain; no account, no server
-- Published on TestFlight
+- SwiftUI + Core Data (five model versions with lightweight migration), iOS 16+, XcodeGen
+- A small design system built from a design handoff: tokens for color, type, spacing and radius; range bars, step scales and status chips shared across screens
+- Three AI providers behind one client, with automatic failover, batch-to-single fallback on token overflow, and chunked multi-pass extraction for long reports with deduplication-aware merging
+- 2,000+ unit tests plus source-rule checks (e.g. every save listener is scoped to its own context), run in GitHub Actions
+- API keys in the iOS Keychain; portrait-only, iPhone-only build ready for App Store submission
 
 ---
 
@@ -95,7 +105,7 @@ on free data sources, with no API keys required.
 | **Mobile** | SwiftUI, CoreData, UIKit, XcodeGen, TestFlight |
 | **Frontend** | React, TypeScript, JavaScript, HTML/CSS, SVG |
 | **Backend** | Python, Flask, Node.js, SQLite |
-| **AI/ML** | REST API integrations (Gemini, DeepSeek, Qwen), prompt engineering, vision models, structured extraction |
+| **AI/ML** | REST API integrations (Gemini, DeepSeek, ZhiPu GLM, Qwen), prompt engineering, vision models, structured extraction |
 | **Finance** | Fixed income analysis, FX risk, algorithmic trading, quantitative modeling |
 | **Tools** | Git, Xcode, Vercel, Jupyter |
 
