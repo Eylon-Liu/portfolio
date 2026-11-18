@@ -47,7 +47,7 @@
 
 <header>
   <h1>FamilyVitals — Privacy Policy</h1>
-  <p class="sub">Last updated: 12 November 2026 · <a href="#zh">中文版本</a></p>
+  <p class="sub">Last updated: 18 November 2026 · <a href="#zh">中文版本</a></p>
 </header>
 
 <p>FamilyVitals is a personal health-record app for iPhone. This policy explains exactly what happens to the information you put into it.</p>
@@ -78,17 +78,17 @@
 <p>You must obtain your own API key from Google, ZhiPu or DeepSeek and enter it in Settings. The key is stored in the iOS Keychain on your device and is used only to authenticate your own requests. The developer never receives, sees, or proxies your key or your requests — network calls go directly from your iPhone to the provider.</p>
 
 <h3>What is sent, and when</h3>
-<p>Data is transmitted only at the moment you tap an AI action (extracting a report, or generating an analysis, health summary, doctor report, or explanation of abnormal results). Depending on the action, the request may contain:</p>
+<p>Before the first AI action for each provider, the app names the provider and what will be sent, and asks for your explicit agreement; nothing is sent without it, and you can withdraw it in Settings. After that, data is transmitted only at the moment you tap an AI action (extracting a report, or generating an analysis, health summary, doctor report, explanation of abnormal results, or comparison of imaging reports). Depending on the action, the request may contain:</p>
 <table>
   <tr><th>Category</th><th>Specifics</th></tr>
-  <tr><td>Report files</td><td>The PDF or photo you uploaded, so its text can be extracted</td></tr>
+  <tr><td>Report content</td><td>Never the original file. The phone reads the PDF or photo on-device and finds the name, age, birth date, ID and record numbers, phone numbers, addresses and e-mail. It sends the text with those removed and — for Gemini and ZhiPu, unless you turn it off in Settings — the page images with those details, any barcode or QR code, and any face painted over in black. Text PDFs and DeepSeek requests are text only. The review screen shows exactly what was sent.</td></tr>
   <tr><td>Report details</td><td>Title, date, type, body part, hospital, doctor, findings, conclusion, recommendations</td></tr>
   <tr><td>Lab results</td><td>Test names, values, units, reference ranges, and whether each is high, low or normal</td></tr>
   <tr><td>Conditions</td><td>Condition names and their status (active, monitoring, resolved)</td></tr>
   <tr><td>Medications</td><td>Names, doses and frequency of current medications (doctor report only)</td></tr>
-  <tr><td>Profile details</td><td>The profile's display name, gender, and recorded allergies</td></tr>
+  <tr><td>Profile details</td><td>Sex, a ten-year age range (doctor report only) and recorded allergies — never the profile's name</td></tr>
 </table>
-<p>Nothing else is transmitted. FamilyVitals does not send your device identifiers, contacts, location, photos other than the report file you chose, or any advertising identifier.</p>
+<p>Nothing else is transmitted. FamilyVitals does not send original report files or unmasked photos, your device identifiers, contacts, location, or any advertising identifier. Each request is independent: the app keeps no conversation with the provider, so nothing from one request is carried into the next.</p>
 
 <h3>Who receives it</h3>
 <ul>
@@ -129,7 +129,7 @@
 
 <header>
   <h1>FamilyVitals — 隐私政策</h1>
-  <p class="sub">最后更新：2026 年 11 月 12 日 · <a href="#">English version</a></p>
+  <p class="sub">最后更新：2026 年 11 月 18 日 · <a href="#">English version</a></p>
 </header>
 
 <p>FamilyVitals 是一款 iPhone 个人健康档案应用。本政策说明你录入的信息究竟会经历什么。</p>
@@ -160,17 +160,17 @@
 <p>你需要自行从 Google、智谱或 DeepSeek 获取 API Key 并填入设置中。该 Key 保存在你设备的 iOS 钥匙串中，仅用于验证你自己的请求。开发者不会收到、看到或中转你的 Key 与请求——网络请求由你的 iPhone 直接发往服务商。</p>
 
 <h3>发送什么、何时发送</h3>
-<p>只有在你点击 AI 操作（提取报告、生成分析 / 健康摘要 / 医生报告 / 异常指标解读）的那一刻才会传输数据。根据操作不同，请求可能包含：</p>
+<p>每个 AI 服务商第一次使用前，应用会说明服务商名称和将要发送的内容，并征求你的明确同意；未同意不会发送任何内容，同意也可以在「设置」中撤回。之后，只有在你点击 AI 操作（提取报告、生成分析 / 健康摘要 / 医生报告 / 异常指标解读 / 影像报告对比）的那一刻才会传输数据。根据操作不同，请求可能包含：</p>
 <table>
   <tr><th>类别</th><th>具体内容</th></tr>
-  <tr><td>报告文件</td><td>你上传的 PDF 或照片，用于提取其中的文字</td></tr>
+  <tr><td>报告内容</td><td>不发送原始文件。手机先在本地识别 PDF 或照片，找出姓名、年龄、出生日期、证件号与病历号、电话、地址和邮箱；发送去掉这些信息后的文字，以及（使用 Gemini 或智谱且未在设置中关闭时）把这些信息、条形码、二维码和人脸涂黑后的页面图片。文字版 PDF 和 DeepSeek 只发送文字。导入核对页面可以查看实际发送的全部内容。</td></tr>
   <tr><td>报告信息</td><td>标题、日期、类型、检查部位、医院、医生、检查发现、结论、建议</td></tr>
   <tr><td>检验结果</td><td>项目名称、数值、单位、参考范围，以及偏高 / 偏低 / 正常的判定</td></tr>
   <tr><td>病史记录</td><td>病症名称及其状态（活跃中、观察中、已解决）</td></tr>
   <tr><td>用药</td><td>当前用药的名称、剂量和用法（仅医生报告）</td></tr>
-  <tr><td>档案信息</td><td>档案的显示名称、性别、已记录的过敏史</td></tr>
+  <tr><td>档案信息</td><td>性别、十岁一档的年龄段（仅医生报告）、已记录的过敏史——不发送档案名称</td></tr>
 </table>
-<p>除此之外不会传输任何内容。FamilyVitals 不会发送设备标识符、通讯录、位置信息、你所选报告文件之外的照片，或任何广告标识符。</p>
+<p>除此之外不会传输任何内容。FamilyVitals 不会发送原始报告文件或未遮挡的照片、设备标识符、通讯录、位置信息或任何广告标识符。每次请求都是独立的：应用不与服务商保持对话，一次请求的内容不会带入下一次。</p>
 
 <h3>数据发往何处</h3>
 <ul>
