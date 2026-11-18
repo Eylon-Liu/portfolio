@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FamilyVitals — Support</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1c1c1e; --muted: #6b7280; --line: #e5e7eb;
+    --accent: #0E5A5E; --card: #f7f7f9; --warn-bg: #fff7ed; --warn-fg: #9a3412; --warn-line: #fdba74;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d0d0f; --fg: #f2f2f7; --muted: #9ca3af; --line: #2c2c2e;
+      --accent: #5CC2BE; --card: #1a1a1d; --warn-bg: #2a1a0e; --warn-fg: #fdba74; --warn-line: #7c3d10;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 20px 80px;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+  header { padding: 48px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+  h1 { font-size: 1.9rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.2rem; margin: 40px 0 10px; letter-spacing: -0.01em; }
+  h3 { font-size: 1rem; margin: 24px 0 6px; }
+  .sub { color: var(--muted); font-size: .92rem; margin: 0 0 20px; }
+  .lang-sep { margin: 64px 0 0; border: 0; border-top: 1px solid var(--line); }
+  ul { padding-left: 1.25em; }
+  li { margin: 6px 0; }
+  code { background: var(--card); padding: 2px 6px; border-radius: 5px; font-size: .88em; }
+  a { color: var(--accent); }
+  .card { background: var(--card); border-radius: 12px; padding: 16px 18px; margin: 18px 0; }
+  .callout { background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-line); border-radius: 12px; padding: 16px 18px; margin: 22px 0; }
+  .callout strong { display: block; margin-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .93rem; display: block; overflow-x: auto; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: .87rem; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>FamilyVitals — Support</h1>
+  <p class="sub">For FamilyVitals 1.4 · <a href="#zh">中文版本</a> · <a href="privacy.html">Privacy Policy</a></p>
+</header>
+
+<p>FamilyVitals keeps your family's medical reports, lab results, medications and follow-ups on your iPhone. Everything stays on the device; there is no account.</p>
+
+<div class="card">
+  <strong>Need help?</strong>
+  Email <a href="mailto:liuxy.eylon2012@gmail.com">liuxy.eylon2012@gmail.com</a>. Please don't attach medical reports — describe the problem, or send a screenshot with personal details covered.
+</div>
+
+<h2>Getting started</h2>
+<h3>How do I add a report?</h3>
+<p>Tap <strong>+</strong> in the tab bar. Choose whose record it goes into ("Save to"), then scan a paper report, pick photos, or pick PDF/image files. You can also enter a report by hand. Before anything is saved you review what was read and can correct it.</p>
+<h3>Do I need an API key?</h3>
+<p>No. <strong>On-device reading</strong> uses Apple's text recognition on your iPhone: free, offline, nothing uploaded. It reads dates, hospitals and tidy lab tables well; check unusual layouts before saving.</p>
+<p><strong>AI reading</strong> is optional and more accurate on complex reports. Add your own API key for Gemini, ZhiPu GLM or DeepSeek in Settings. The first time you use a provider, the app asks for your consent and says what will be sent. Name, age, birth date, ID and record numbers, phone, address and e-mail are removed on the phone first; original files are never uploaded. You can withdraw consent in Settings.</p>
+<h3>How do I add family members?</h3>
+<p>Tap the name at the top left of any tab, or open <strong>Record → Other family members → Add family member</strong>. Each person's records are kept apart.</p>
+
+<h2>Using the app</h2>
+<h3>What do the colors mean?</h3>
+<p>Red (with ↑) is high or positive, blue (with ↓) is low, and teal is anything you can tap. Normal values are not colored. The bar under a result shows where it sits against that report's reference range.</p>
+<h3>Where are trends?</h3>
+<p>Open the <strong>Labs</strong> tab and tap any test to see its chart and every past result with the report it came from. Tap the star to follow a test.</p>
+<h3>Can I search?</h3>
+<p>Tap the magnifying glass on any tab to search the current person's reports, lab results, hospitals and medications.</p>
+<h3>Dark mode?</h3>
+<p><strong>Settings → General → Appearance</strong>: System (follows your iPhone, including automatic light by day and dark at night), Light or Dark.</p>
+
+<h2>Your data</h2>
+<h3>How do I move to a new iPhone?</h3>
+<p><strong>Settings → Data Backup → Export Backup</strong> saves a file you can send to the new phone, then <strong>Import Backup</strong> there. API keys are not in backups (they stay in this iPhone's Keychain), so enter them again on the new phone.</p>
+<h3>How do I delete something?</h3>
+<p>Swipe left on a report in Reports to delete it with its results. To delete a family member and everything filed under them, open the switcher (name at the top left) and swipe left on that person. Deletions can't be undone; export a backup first if unsure. Deleting the app removes all of its records from the phone.</p>
+<h3>Can I lock the app?</h3>
+<p>Yes: turn on the app lock in Settings to require Face ID, Touch ID or your passcode. The app switcher preview is hidden too.</p>
+
+<div class="callout">
+  <strong>Not medical advice</strong>
+  FamilyVitals organises your own records. Values read from documents can be wrong, and AI text can be mistaken. Always check against the original report and talk to your doctor before making any health decision. In an emergency, call your local emergency number.
+</div>
+
+<hr class="lang-sep" id="zh">
+
+<header>
+  <h1>FamilyVitals — 帮助与支持</h1>
+  <p class="sub">适用于 FamilyVitals 1.4 · <a href="privacy.html#zh">隐私政策</a></p>
+</header>
+
+<p>FamilyVitals 把全家人的检查报告、化验结果、用药和复查提醒保存在你的 iPhone 上。所有数据只在本机，无需注册账号。</p>
+
+<div class="card">
+  <strong>需要帮助？</strong>
+  请发邮件至 <a href="mailto:liuxy.eylon2012@gmail.com">liuxy.eylon2012@gmail.com</a>。请不要附上病历原件——描述问题即可，或发送遮挡了个人信息的截图。
+</div>
+
+<h2>开始使用</h2>
+<h3>怎么添加报告？</h3>
+<p>点标签栏中间的 <strong>＋</strong>，先选「存入档案」（存给谁），再扫描纸质报告、选择照片或选择 PDF / 图片文件，也可以手动填写。保存前会先让你核对识别结果，可以直接修改。</p>
+<h3>一定要 API Key 吗？</h3>
+<p>不用。<strong>本机读取</strong>使用 iPhone 自带的文字识别：免费、不联网、不上传。日期、医院和规范的化验表格都能读出；格式复杂的报告请保存前仔细核对。</p>
+<p><strong>AI 读取</strong>是可选的，复杂报告识别更准。在「设置」里填写你自己的 Gemini、智谱 GLM 或 DeepSeek 的 API Key。第一次使用某个服务时，应用会说明要发送什么并征求你的同意。姓名、年龄、出生日期、证件号和病历号、电话、地址、邮箱会先在手机上去掉；原始文件不会上传。可以随时在「设置」中撤回同意。</p>
+<h3>怎么添加家庭成员？</h3>
+<p>点任意页面左上角的名字，或打开 <strong>档案 → 其他家庭成员 → 添加家庭成员</strong>。每个人的记录分开保存。</p>
+
+<h2>日常使用</h2>
+<h3>颜色是什么意思？</h3>
+<p>红色（带 ↑）表示偏高或阳性，蓝色（带 ↓）表示偏低，墨青色表示可以点击。正常数值不上色。结果下方的条显示它在该报告参考范围中的位置。</p>
+<h3>趋势在哪里看？</h3>
+<p>打开 <strong>指标</strong> 标签，点任意一项即可看到趋势图和历次结果及其来源报告。点星标可以关注这项指标。</p>
+<h3>能搜索吗？</h3>
+<p>每个标签页右上角的放大镜可以搜索当前家庭成员的报告、检验指标、医院和用药。</p>
+<h3>深色模式？</h3>
+<p><strong>设置 → 通用 → 外观</strong>：跟随系统（包括 iPhone 的白天浅色、夜间深色自动切换）、浅色或深色。</p>
+
+<h2>你的数据</h2>
+<h3>换手机怎么办？</h3>
+<p><strong>设置 → 数据备份 → 导出备份</strong>，把文件发到新手机，再在新手机上 <strong>导入备份</strong>。API Key 不在备份里（只保存在这台 iPhone 的钥匙串中），需要在新手机上重新填写。</p>
+<h3>怎么删除？</h3>
+<p>在「报告」列表中左滑可删除一份报告及其结果。要删除某位家庭成员及其全部记录，点左上角名字打开切换面板，在该成员上左滑。删除后无法恢复，不确定时请先导出备份。删除应用会清除它在手机上的全部记录。</p>
+<h3>能给应用加锁吗？</h3>
+<p>可以：在「设置」中打开应用锁，进入时需要面容 ID、触控 ID 或锁屏密码，多任务界面的预览也会被遮住。</p>
+
+<div class="callout">
+  <strong>不构成医疗建议</strong>
+  FamilyVitals 只是帮你整理自己的病历。从文件中读出的数值可能有误，AI 生成的文字也可能出错。做任何健康决定之前，请对照原始报告并咨询医生。紧急情况请立即拨打急救电话。
+</div>
+
+<footer>FamilyVitals · <a href="privacy.html">Privacy Policy / 隐私政策</a></footer>
+
+</main>
+</body>
+</html>

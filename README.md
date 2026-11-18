@@ -17,7 +17,7 @@ Upload a medical report as a PDF or photo, and the app extracts lab results, dat
   &nbsp;&nbsp;
   <img src="images/reports.png" width="230" alt="Reports — grouped by year, with type, clinic and abnormal count" />
   &nbsp;&nbsp;
-  <img src="images/me.png" width="230" alt="Profile — multi-family-member support" />
+  <img src="images/record.png" width="230" alt="Record — one family member's history, medications and the rest of the family" />
 </p>
 <p align="center"><sub>Screenshots use a fictional demo profile, not real medical records.</sub></p>
 
